@@ -1,28 +1,41 @@
 # autoget
 
-Tool terminal Node.js untuk mengambil value dari sebuah key di file JSON,
-lalu menyimpannya ke file `.txt` — satu value per baris.
+Tool CLI untuk mengambil value dari sebuah key di file JSON, lalu menyimpannya
+ke file `.txt` — **satu value per baris**. Tanpa dependency, cukup Node.js.
+
+## Instalasi
+
+Clone repo ini lalu install command-nya secara global:
+
+```bash
+git clone git@github.com:dwidev/autoget.git
+cd autoget
+npm install -g .
+```
+
+Setelah itu command `autoget` bisa dipanggil dari mana saja — tanpa perlu `node`.
+
+> Untuk development, pakai `npm link` agar perubahan kode langsung aktif.
 
 ## Cara pakai
 
 ```bash
-node index.js <file.json>
+autoget data.json
 ```
 
-Script akan menanyakan key yang mau diambil dan nama file output:
+Tool akan menanyakan key yang mau diambil dan nama file output:
 
 ```
-Path file JSON: data.json
 Key yang mau diambil: name
 Simpan ke file (default: result.txt):
 ✔ 3 value dari key "name" disimpan ke:
    /path/ke/result.txt
 ```
 
-Path file JSON juga bisa langsung dikasih sebagai argumen:
+Kalau path file JSON tidak dikasih, tool akan menanyakannya:
 
 ```bash
-node index.js data.json
+autoget
 ```
 
 ## Contoh

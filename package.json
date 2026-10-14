@@ -1,13 +1,26 @@
 {
   "name": "autoget",
   "version": "1.0.0",
-  "description": "Ambil value dari sebuah key di JSON, simpan ke file .txt",
+  "description": "Tool CLI untuk mengambil value dari sebuah key di file JSON, lalu menyimpannya ke .txt (satu value per baris).",
   "main": "index.js",
   "bin": {
     "autoget": "index.js"
   },
-  "scripts": {
-    "start": "node index.js"
+  "files": [
+    "index.js",
+    "README.md"
+  ],
+  "keywords": [
+    "json",
+    "extract",
+    "cli",
+    "txt",
+    "key",
+    "value"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com:dwidev/autoget.git"
   },
   "engines": {
     "node": ">=14"
