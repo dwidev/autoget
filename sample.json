@@ -1,5 +1,5 @@
 [
-  { "name": "Andi", "age": 22 },
-  { "name": "Budi", "age": 30 },
-  { "name": "Citra", "age": 25 }
+  { "name": "Andi", "age": 22, "user": { "profile": { "city": "Jakarta" } } },
+  { "name": "Budi", "age": 30, "user": { "profile": { "city": "Bandung" } } },
+  { "name": "Citra", "age": 25, "user": { "profile": { "city": "Surabaya" } } }
 ]

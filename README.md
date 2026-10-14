@@ -38,30 +38,48 @@ Kalau path file JSON tidak dikasih, tool akan menanyakannya:
 autoget
 ```
 
+## Nested key
+
+Key boleh bersarang, pakai notasi **titik** atau **garis miring**:
+
+```bash
+autoget data.json
+# → user.name
+# → user/profile/city
+# → user/tags/0/label
+```
+
+Aturan penelusuran:
+
+- `a.b.c` dan `a/b/c` sama artinya.
+- Kalau di tengah path ada **array**, semua elemennya ditelusuri
+  (jadi semua value terdalam ikut terkumpul).
+- Kalau bagian path berupa **angka**, itu dianggap indeks array
+  (mis. `user.tags.0.label`).
+- Item yang tidak punya path tersebut cukup dilewati.
+
 ## Contoh
 
 `data.json`:
 
 ```json
 [
-  { "name": "Andi", "age": 22 },
-  { "name": "Budi", "age": 30 },
-  { "name": "Citra", "age": 25 }
+  { "name": "Andi", "age": 22, "user": { "profile": { "city": "Jakarta" } } },
+  { "name": "Budi", "age": 30, "user": { "profile": { "city": "Bandung" } } },
+  { "name": "Citra", "age": 25, "user": { "profile": { "city": "Surabaya" } } }
 ]
 ```
 
-Hasil `result.txt` saat key = `name`:
-
-```
-Andi
-Budi
-Citra
-```
+| Key dimasukkan | Isi `result.txt` |
+|---|---|
+| `name` | `Andi` / `Budi` / `Citra` |
+| `age` | `22` / `30` / `25` |
+| `user.profile.city` | `Jakarta` / `Bandung` / `Surabaya` |
 
 ## Catatan
 
 - Mendukung **array of objects** maupun **object tunggal**.
-- Key yang tidak ada di sebagian item cukup dilewati (item tanpa key itu diabaikan).
+- Key yang tidak ada di sebagian item cukup dilewati.
 - Value bertipe object/array akan diserialisasi jadi JSON dalam satu baris;
   value `null` menjadi baris kosong.
 - Kalau key sama sekali tidak ditemukan, atau JSON invalid, tool berhenti dengan error.

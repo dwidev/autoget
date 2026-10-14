@@ -62,16 +62,51 @@ function createPrompter() {
   return { ask, close: () => rl.close() };
 }
 
-// Ambil value dari key, baik object tunggal maupun array of objects.
-function extractValues(data, key) {
-  const items = Array.isArray(data) ? data : [data];
-  const values = [];
+// Pisah key jadi bagian-bagian path. Dukung "a.b.c" dan "a/b/c",
+// plus indeks array angka ("items.0.name").
+function parseKeyParts(key) {
+  return key
+    .split(/[./]/)
+    .map((part) => part.trim())
+    .filter((part) => part.length > 0);
+}
 
-  items.forEach((item) => {
-    if (item && typeof item === "object" && key in item) {
-      values.push(item[key]);
+// Telusuri satu path ke dalam data. Array di tengah path akan ditelusuri
+// ke SEMUA elemennya, kecuali head-nya angka (indeks array eksplisit).
+function walk(node, parts) {
+  // Path habis — node ini adalah value yang dicari.
+  if (parts.length === 0) return [node];
+
+  const [head, ...rest] = parts;
+
+  // Array: kalau head angka, ambil indeks itu; kalau bukan, telusuri semua.
+  if (Array.isArray(node)) {
+    if (/^\d+$/.test(head)) {
+      const index = Number(head);
+      return index < node.length ? walk(node[index], rest) : [];
     }
-  });
+    const results = [];
+    node.forEach((item) => results.push(...walk(item, parts)));
+    return results;
+  }
+
+  if (node === null || typeof node !== "object") return [];
+
+  if (head in node) {
+    return walk(node[head], rest);
+  }
+
+  return [];
+}
+
+// Ambil semua value untuk sebuah key, baik top-level maupun nested.
+function extractValues(data, key) {
+  const parts = parseKeyParts(key);
+
+  // Coba sebagai path relatif dari tiap item (data array / object tunggal).
+  const items = Array.isArray(data) ? data : [data];
+  let values = [];
+  items.forEach((item) => values.push(...walk(item, parts)));
 
   return values;
 }
