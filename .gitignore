@@ -1,0 +1,13 @@
+node_modules/
+result.txt
+*.log
+.DS_Store
+.commandcode/
+
+# Data sensitif (token/cookie akun) — jangan pernah di-commit
+wb.json
+*.token
+cookies*.txt
+emails*.txt
+access.txt
+refresh.txt

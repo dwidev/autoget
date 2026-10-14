@@ -1,0 +1,16 @@
+{
+  "name": "autoget",
+  "version": "1.0.0",
+  "description": "Ambil value dari sebuah key di JSON, simpan ke file .txt",
+  "main": "index.js",
+  "bin": {
+    "autoget": "index.js"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "license": "MIT"
+}
